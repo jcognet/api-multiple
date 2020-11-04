@@ -1,11 +1,10 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ApiCaller;
 
 
 use App\Entity\Brewery;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class OpenBreweryDb
@@ -14,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @package App\Service
  */
-class OpenBreweryDb extends BreweryResearchApi
+class OpenBreweryDb extends BreweryResearchApi implements BreweryApiInterface
 {
     /**
      * URL pour requête l'API

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ApiCaller;
 
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;

@@ -6,6 +6,12 @@
 parameters:
 
 services:
+    _instanceof:
+        # services whose classes are instances of BreweryApiInterface  will be tagged automatically
+        # see https://symfony.com/doc/current/service_container/tags.html
+        App\Service\ApiCaller\BreweryApiInterface:
+            tags: [ 'app.beer_tag' ]
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -26,6 +32,9 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    App\Service\ResearchApiCaller:
+        arguments: [ !tagged_iterator { tag: 'app.beer_tag', index_by: 'key' } ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

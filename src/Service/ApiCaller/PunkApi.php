@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ApiCaller;
+
 
 use App\Entity\Brewery;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class PunkApi
@@ -13,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @package App\Service
  */
-class PunkApi extends BreweryResearchApi
+class PunkApi extends BreweryResearchApi implements BreweryApiInterface
 {
     /**
      * URL pour requête l'API
