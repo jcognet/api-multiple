@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Command\Old;
+namespace App\Command;
 
 
 use App\Service\OpenBeerDatabase;
@@ -33,6 +33,7 @@ class BreweryResearchCommand extends Command
 
     /**
      * OpenBreweryDbResearchCommand constructor.
+     *
      * @param string|null $name
      * @param PunkApi $punkApi
      * @param OpenBreweryDb $breweryDb
@@ -49,9 +50,8 @@ class BreweryResearchCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Recherche une brasserie via PunkApi')
-            ->setHelp('Recherche une brasserie en faisant appel à l\'API Punk. Merci à eux')
-            ->addArgument('keyword', InputArgument::REQUIRED, 'Mot clé à chercher');
+        $this->setDescription('Seek breweries in all APIs with a given keywords')
+            ->addArgument('keyword', InputArgument::REQUIRED, 'keyword to seek');
     }
 
     /**
@@ -63,8 +63,8 @@ class BreweryResearchCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $now = new \DateTime();
-        $output->writeln(sprintf('Lancement de la commande %s à %s le %s', self::$defaultName, $now->format('H:i:s'), $now->format('d/m/Y')));
-        $output->writeln(sprintf('Mot clé à chercher : %s', $input->getArgument('keyword')));
+        $output->writeln(sprintf('Start of the command %s at %s %s', self::$defaultName, $now->format('H:i:s'), $now->format('d/m/Y')));
+        $output->writeln(sprintf('Keyword to find : %s', $input->getArgument('keyword')));
 
         $punkBreweries = $this->punkApi->callApi($input->getArgument('keyword'));
         $openBreweryDbBreweries = $this->breweryDb->callApi($input->getArgument('keyword'));

@@ -131,7 +131,7 @@ class Brewery
     public function __toString()
     {
         return sprintf(
-            '%s fabriqué en %s, type : %s, détail : %s (source : %s)',
+            '%s made in %s, type : %s, details : %s (origin : %s)',
             $this->getName(),
             $this->getCountry(),
             $this->getType(),

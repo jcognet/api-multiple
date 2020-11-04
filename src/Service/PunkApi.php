@@ -13,7 +13,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @package App\Service
  */
-class PunkApi implements BreweryResearchApiInterface
+class PunkApi extends BreweryResearchApi
 {
     /**
      * URL pour requête l'API
@@ -21,31 +21,17 @@ class PunkApi implements BreweryResearchApiInterface
     private const URL = 'https://api.punkapi.com/v2/beers';
 
     /**
-     * @var HttpClientInterface
+     * @inheritDoc
      */
-    private $client;
-
-    public function __construct(HttpClientInterface $client)
+    public function getUrl(string $keyword): string
     {
-        $this->client = $client;
-    }
-
-    public function callApi(string $keyword): array
-    {
-        $response = $this->client->request('GET',
-            self::URL . '?beer_name=' . $keyword
-        );
-        $content = $response->toArray();
-
-        return $this->formatData($content);
+        return self::URL . '?beer_name=' . $keyword;
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
+     * @inheritDoc
      */
-    private function formatData(array $data): array
+    protected function formatData(array $data): array
     {
         $formattedData = [];
 

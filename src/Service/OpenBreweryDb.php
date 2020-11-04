@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @package App\Service
  */
-class OpenBreweryDb implements BreweryResearchApiInterface
+class OpenBreweryDb extends BreweryResearchApi
 {
     /**
      * URL pour requête l'API
@@ -22,31 +22,17 @@ class OpenBreweryDb implements BreweryResearchApiInterface
     private const URL = 'https://api.openbrewerydb.org/breweries/search';
 
     /**
-     * @var HttpClientInterface
+     * @inheritDoc
      */
-    private $client;
-
-    public function __construct(HttpClientInterface $client)
+    protected function getUrl(string $keyword): string
     {
-        $this->client = $client;
-    }
-
-    public function callApi(string $keyword): array
-    {
-        $response = $this->client->request('GET',
-            self::URL . '?query=' . $keyword
-        );
-        $content = $response->toArray();
-
-        return $this->formatData($content);
+        return self::URL . '?query=' . $keyword;
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
+     * @inheritDoc
      */
-    private function formatData(array $data): array
+    protected function formatData(array $data): array
     {
         $formattedData = [];
 

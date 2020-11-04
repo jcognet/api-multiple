@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Command;
+namespace App\Command\Old;
 
 
 use App\Service\OpenBreweryDb;

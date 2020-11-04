@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @package App\Service
  */
-class OpenBeerDatabase implements BreweryResearchApiInterface
+class OpenBeerDatabase extends BreweryResearchApi
 {
     /**
      * URL pour requête l'API
@@ -22,35 +22,21 @@ class OpenBeerDatabase implements BreweryResearchApiInterface
     private const URL = 'https://data.opendatasoft.com/api/records/1.0/search/?dataset=open-beer-database%40public-us&facet=style_name&facet=cat_name&facet=name_breweries&facet=country';
 
     /**
-     * @var HttpClientInterface
+     * @inheritDoc
      */
-    private $client;
-
-    public function __construct(HttpClientInterface $client)
+    protected function getUrl(string $keyword): string
     {
-        $this->client = $client;
-    }
-
-    public function callApi(string $keyword): array
-    {
-        $response = $this->client->request('GET',
-            self::URL . '&q=' . $keyword
-        );
-        $content = $response->toArray();
-
-        return $this->formatData($content['records']);
+        return self::URL . '&q=' . $keyword;
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
+     * @inheritDoc
      */
-    private function formatData(array $data): array
+    protected  function formatData(array $data): array
     {
         $formattedData = [];
 
-        foreach ($data as $responseBrewery) {
+        foreach ($data['records'] as $responseBrewery) {
             $formattedData[] = new Brewery(
                 'Open Beer Database',
                 $responseBrewery['fields']['name'],
