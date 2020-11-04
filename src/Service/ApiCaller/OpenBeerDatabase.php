@@ -1,20 +1,19 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ApiCaller;
 
 
 use App\Entity\Brewery;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * Class OpenBreweryDb
+ * Class OpenBeerDatabase
  *
  * Source : https://data.opendatasoft.com/explore/dataset/open-beer-database%40public-us/table/
  *
  * @package App\Service
  */
-class OpenBeerDatabase extends BreweryResearchApi
+class OpenBeerDatabase extends BreweryResearchApi implements BreweryApiInterface
 {
     /**
      * URL pour requête l'API
