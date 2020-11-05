@@ -15,13 +15,20 @@ abstract class BreweryResearchApi
     private $client;
 
     /**
+     * @var int
+     */
+    private $maxRandomSleepTime;
+
+    /**
      * BreweryResearchApi constructor.
      *
      * @param HttpClientInterface $client
+     * @param int $maxRandomSleepTime
      */
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, int $maxRandomSleepTime)
     {
         $this->client = $client;
+        $this->maxRandomSleepTime = $maxRandomSleepTime;
     }
 
     /**
@@ -35,6 +42,10 @@ abstract class BreweryResearchApi
             $this->getUrl($keyword)
         );
         $content = $response->toArray();
+
+        if ($this->maxRandomSleepTime > 0) {
+            sleep(rand(0, $this->maxRandomSleepTime));
+        }
 
         return $this->formatData($content);
     }
