@@ -8,6 +8,7 @@ use App\Service\ResearchApiCaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BreweryResearchCommand extends Command
@@ -35,6 +36,7 @@ class BreweryResearchCommand extends Command
     protected function configure()
     {
         $this->setDescription('Seek breweries in all APIs with a given keywords')
+            ->addOption('with-message', 'w', InputOption::VALUE_NONE, 'if present, the command uses a message (and not directly the API calls). Use -vvv to see the difference. ')
             ->addArgument('keyword', InputArgument::REQUIRED, 'keyword to seek');
     }
 
@@ -56,7 +58,8 @@ class BreweryResearchCommand extends Command
             $output->writeln(sprintf('API class : %s', $apiName));
         }
 
-        $breweries = $this->researchApiCaller->callAllApi($input->getArgument('keyword'));
+        $methods = $input->getOption('with-message') ? 'callApiAllWithMessage' : 'callAllApi';
+        $breweries = $this->researchApiCaller->$methods($input->getArgument('keyword'));
 
         foreach ($breweries as $brewery) {
             $output->writeln($brewery);

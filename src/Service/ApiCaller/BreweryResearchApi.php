@@ -4,11 +4,13 @@
 namespace App\Service\ApiCaller;
 
 
+use App\Message\ApiCallNotification;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 abstract class BreweryResearchApi
 {
-
     /**
      * @var HttpClientInterface
      */
@@ -20,15 +22,22 @@ abstract class BreweryResearchApi
     private $maxRandomSleepTime;
 
     /**
+     * @var MessageBusInterface
+     */
+    private $bus;
+
+    /**
      * BreweryResearchApi constructor.
      *
      * @param HttpClientInterface $client
      * @param int $maxRandomSleepTime
+     * @param MessageBusInterface $bus
      */
-    public function __construct(HttpClientInterface $client, int $maxRandomSleepTime)
+    public function __construct(HttpClientInterface $client, int $maxRandomSleepTime, MessageBusInterface $bus)
     {
         $this->client = $client;
         $this->maxRandomSleepTime = $maxRandomSleepTime;
+        $this->bus = $bus;
     }
 
     /**
@@ -38,8 +47,24 @@ abstract class BreweryResearchApi
      */
     public function callApi(string $keyword): ?array
     {
+        return $this->getResult($this->getUrl($keyword));
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array|null
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function getResult(string $url): ?array
+    {
         $response = $this->client->request('GET',
-            $this->getUrl($keyword)
+            $url
         );
         $content = $response->toArray();
 
@@ -48,6 +73,16 @@ abstract class BreweryResearchApi
         }
 
         return $this->formatData($content);
+    }
+
+    /**
+     * @param string $keyword
+     *
+     * @return Envelope
+     */
+    public function callApiWithMessage(string $keyword): Envelope
+    {
+        return $this->bus->dispatch(new ApiCallNotification($this->getUrl($keyword), get_class($this)));
     }
 
     /**

@@ -4,6 +4,9 @@
 namespace App\Service;
 
 
+use App\Service\ApiCaller\BreweryResearchApi;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
+
 class ResearchApiCaller
 {
     /**
@@ -30,17 +33,53 @@ class ResearchApiCaller
     }
 
     /**
+     * @param string $class
+     *
+     * @return mixed
+     */
+    public function getClass(string $class)
+    {
+        foreach ($this->getListService() as $service) {
+            if ($class === get_class($service)) {
+                return $service;
+            }
+        }
+
+        throw new \LogicException(sprintf('Unknown class : %s', $class));
+    }
+
+    /**
      * @param string $keyword
      *
      * @return array
      */
-    public function callAllApi(string $keyword):array
+    public function callAllApi(string $keyword): array
     {
         $breweries = [];
 
-        /** @var BreweryResearchApi $api **/
-        foreach($this->listResearchApiHelper as $api){
+        /** @var BreweryResearchApi $api * */
+        foreach ($this->listResearchApiHelper as $api) {
             $breweries = array_merge($breweries, $api->callApi($keyword));
+        }
+
+        return $breweries;
+    }
+
+    /**
+     * @param string $keyword
+     *
+     * @return array
+     */
+    public function callApiAllWithMessage(string $keyword): array
+    {
+        $breweries = [];
+
+        /** @var BreweryResearchApi $api * */
+        foreach ($this->listResearchApiHelper as $api) {
+            $breweries = array_merge(
+                $breweries,
+                $api->callApiWithMessage($keyword)->last(HandledStamp::class)->getResult()
+            );
         }
 
         return $breweries;
