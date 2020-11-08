@@ -1,35 +1,31 @@
 <?php
 
-
 namespace App\Service\ApiCaller;
-
 
 use App\Entity\Brewery;
 
 /**
- * Class OpenBreweryDb
+ * Class OpenBreweryDb.
  *
  * Source : https://www.openbrewerydb.org
- *
- * @package App\Service
  */
 class OpenBreweryDb extends BreweryResearchApi implements BreweryApiInterface
 {
     /**
-     * URL pour requête l'API
+     * URL pour requête l'API.
      */
     private const URL = 'https://api.openbrewerydb.org/breweries/search';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getUrl(string $keyword): string
     {
-        return self::URL . '?query=' . $keyword;
+        return self::URL.'?query='.$keyword;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function formatData(array $data): array
     {

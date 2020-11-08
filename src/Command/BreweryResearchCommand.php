@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Command;
-
 
 use App\Service\ResearchApiCaller;
 use Symfony\Component\Console\Command\Command;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Service\ApiCaller\BreweryResearchApi;
 use Symfony\Component\Messenger\Stamp\HandledStamp;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\MessageHandler;
-
 
 use App\Message\ApiCallNotification;
 use App\Service\ApiCaller\BreweryResearchApi;
