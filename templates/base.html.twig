@@ -2,11 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Beer test!{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app-vue') }}
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block body %}
+            <h1>Bienvenue !!</h1>
+        {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app-vue') }}
+        {% endblock %}
     </body>
 </html>
