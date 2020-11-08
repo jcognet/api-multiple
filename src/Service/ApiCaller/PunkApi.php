@@ -1,35 +1,31 @@
 <?php
 
-
 namespace App\Service\ApiCaller;
-
 
 use App\Entity\Brewery;
 
 /**
- * Class PunkApi
+ * Class PunkApi.
  *
  * Source : https://punkapi.com
- *
- * @package App\Service
  */
 class PunkApi extends BreweryResearchApi implements BreweryApiInterface
 {
     /**
-     * URL pour requête l'API
+     * URL pour requête l'API.
      */
     private const URL = 'https://api.punkapi.com/v2/beers';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUrl(string $keyword): string
     {
-        return self::URL . '?beer_name=' . $keyword;
+        return self::URL.'?beer_name='.$keyword;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function formatData(array $data): array
     {

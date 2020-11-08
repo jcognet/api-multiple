@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\ApiCaller;
-
 
 use App\Message\ApiCallNotification;
 use Symfony\Component\Messenger\Envelope;
