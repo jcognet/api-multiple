@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-class ApiCallNotification
+class ApiAnswerNotification
 {
     /**
      * @var string
@@ -15,25 +15,29 @@ class ApiCallNotification
     private $type;
 
     /**
+     * @var array
+     */
+    private $breweries;
+
+    /**
      * @var string
      */
     private $uniqueId;
 
     /**
-     * ApiCallNotification constructor.
+     * ApiAnswerNotification constructor.
      *
      * @param string $url
      * @param string $type
-     * @param string|null $uniqueId
+     * @param array $breweries
+     * @param string $uniqueId
      */
-    public function __construct(string $url, string $type, ?string $uniqueId)
+    public function __construct(string $url, string $type, array $breweries, string $uniqueId)
     {
         $this->url = $url;
         $this->type = $type;
+        $this->breweries = $breweries;
         $this->uniqueId = $uniqueId;
-        if (!$uniqueId) {
-            $this->uniqueId = uniqid();
-        }
     }
 
     /**
@@ -50,6 +54,14 @@ class ApiCallNotification
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBreweries(): array
+    {
+        return $this->breweries;
     }
 
     /**

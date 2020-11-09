@@ -33,9 +33,9 @@ class ResearchApiCaller
     /**
      * @param string $class
      *
-     * @return mixed
+     * @return BreweryResearchApi
      */
-    public function getClass(string $class)
+    public function getClass(string $class): BreweryResearchApi
     {
         foreach ($this->getListService() as $service) {
             if ($class === get_class($service)) {

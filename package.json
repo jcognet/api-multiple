@@ -17,6 +17,10 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-        "format": "prettier --write ./assets-vue"
+        "format": "prettier --write ./assets-vue",
+        "format-php": "vendor/bin/php-cs-fixer fix"
+    },
+    "dependencies": {
+        "dotenv": "^8.2.0"
     }
 }

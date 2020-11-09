@@ -56,9 +56,10 @@ class BreweryResearchCommand extends Command
             $output->writeln(sprintf('API class : %s', $apiName));
         }
 
-        $methods = $input->getOption('with-message') ? 'callApiAllWithMessage' : 'callAllApi';
-        $breweries = $this->researchApiCaller->$methods($input->getArgument('keyword'));
+        $method = $input->getOption('with-message') ? 'callApiAllWithMessage' : 'callAllApi';
+        $breweries = $this->researchApiCaller->$method($input->getArgument('keyword'));
 
+        $output->writeln(sprintf('Number of results : %s', count($breweries)));
         foreach ($breweries as $brewery) {
             $output->writeln($brewery);
         }

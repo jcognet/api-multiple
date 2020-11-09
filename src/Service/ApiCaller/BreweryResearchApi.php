@@ -75,12 +75,17 @@ abstract class BreweryResearchApi
 
     /**
      * @param string $keyword
+     * @param string|null $uniqueId
      *
      * @return Envelope
      */
-    public function callApiWithMessage(string $keyword): Envelope
+    public function callApiWithMessage(string $keyword, ?string $uniqueId = null): Envelope
     {
-        return $this->bus->dispatch(new ApiCallNotification($this->getUrl($keyword), get_class($this)));
+        return $this->bus->dispatch(new ApiCallNotification(
+            $this->getUrl($keyword),
+            get_class($this),
+            $uniqueId
+        ));
     }
 
     /**
@@ -91,7 +96,8 @@ abstract class BreweryResearchApi
     abstract protected function getUrl(string $keyword): string;
 
     /**
-     * @param array $data
+     * @param array
+     * $data
      *
      * @return array|null
      */

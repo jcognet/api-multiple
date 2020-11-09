@@ -8,7 +8,10 @@ framework:
             # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
+            async: 'in-memory://'
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
+            #'App\Message\ApiAnswerNotification': async
+            #'App\Message\ApiCallNotification': async
