@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "amphp/http-client": "^4.5",
         "cboden/ratchet": "^0.4.3",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/annotations": "^1.0",

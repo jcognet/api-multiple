@@ -1,0 +1,8 @@
+# see https://symfony.com/doc/current/the-fast-track/en/18-async.html#going-async-for-real
+
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    ports: [5672, 15672]

@@ -42,7 +42,6 @@ class ApiAnswerHandler implements MessageHandlerInterface
                 $apiAnswerNotification->getBreweries(),
                 'json'
             );
-
             $conn->send($json);
         }
     }
